@@ -52,10 +52,15 @@ SKIP:
   }
 
   ok(!$db->pg_enable_utf8, 'pg_enable_utf8 false');
-
   $db->pg_enable_utf8(1);
-
   ok($db->pg_enable_utf8 && $db->dbh->{'pg_enable_utf8'}, 'pg_enable_utf8 true');
+
+  # pg_server_prepare
+  ok(! defined $db->pg_server_prepare, 'pg_server_prepare is undefined');
+  $db->pg_server_prepare(1);
+  ok($db->pg_server_prepare && $db->dbh->{'pg_server_prepare'}, 'pg_server_prepare true');
+  $db->pg_server_prepare(0);
+  ok(0 == $db->pg_server_prepare && 0 == $db->dbh->{'pg_server_prepare'}, 'pg_server_prepare false');
 
   SEQUENCE_PREP:
   {
